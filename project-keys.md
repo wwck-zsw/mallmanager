@@ -58,14 +58,59 @@
 3. git add .
 4. git commit -m "init"
 5. 在代码托管平台(github) 新建远程仓库
-6. git push
+7. git remote add origin https://github.com/wwck-zsw/mallmanager.git
+8. git push -u origin master (之后再push 直接 git push)
 
 #### 07-项目-登录-新建分支-login组件-配置路由
+> 新建一个分支 专门写登录功能
+> git branch
+> git checkout -b dev-login
+> 新建组件+配置路由
+> 注意：
+    1.每完成一个小功能就commit一次
+    2.push操作要在master分支去执行
 
 #### 08-项目-登录-引入表单组件
+> el-form
+    1.引入
+    2.调整标签(h2+el-button)
+> label-position="top"
 
 #### 09-项目-登录-样式调整
+> height: 100%
+> 注意：div#app height: 100%
 
-#### 10-项目-准备-项目目录说明
+#### 10-项目-登录-axios 插件
+> axios 不是vue插件 - 不能直接这样使用Vue.use(axios)
+```js
+// 插件模块
+import axios from 'axios'
+const MyHttpServer = {}
+MyHttpServer.install = (Vue) => {
+    // 添加实例方法
+    Vue.prototype.$http = axios
+}
+export default MyHttpServer
+```
+> 在main.js 导入之后 Vue.use(插件名)
+> 结果：this.$http.get()
 
-#### 11-项目-准备-项目目录说明
+#### 11-项目-登录-发送登录请求
+> login.vue methods handleLogin()
+1. this.$http.post('login', this.formdata).then((res)=>{})
+2. 对象结构赋值 res.data
+```js
+    const {
+    data, meta: {msg, status}
+    } = res.data
+```
+
+#### 12-项目-登录-引入提示框组件
+> this.$message.error(msg)
+
+#### 11-项目-登录-发送登录请求
+#### 11-项目-登录-发送登录请求
+#### 11-项目-登录-发送登录请求
+#### 11-项目-登录-发送登录请求
+#### 11-项目-登录-发送登录请求
+#### 11-项目-登录-发送登录请求

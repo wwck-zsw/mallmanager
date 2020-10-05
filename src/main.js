@@ -6,9 +6,17 @@ import router from './router'
 import ElementUI from 'element-ui'
 // 不要忘记引入css文件
 import 'element-ui/lib/theme-chalk/index.css'
+// 引入公共样式
+import '@/assets/css/reset.css'
+// 引入axios
+// import axios from 'axios
+// Vue.prototype.$http = axios
+// 两种都可以，下面是写成插件导入（把一个不是vue插件的变成vue插件）
+import MyServerHttp from '@/plugins/http.js'
 
 // 使用element(组件库)
 Vue.use(ElementUI)
+Vue.use(MyServerHttp)
 
 Vue.config.productionTip = false
 
