@@ -108,9 +108,72 @@ export default MyHttpServer
 #### 12-项目-登录-引入提示框组件
 > this.$message.error(msg)
 
-#### 11-项目-登录-发送登录请求
-#### 11-项目-登录-发送登录请求
-#### 11-项目-登录-发送登录请求
-#### 11-项目-登录-发送登录请求
-#### 11-项目-登录-发送登录请求
-#### 11-项目-登录-发送登录请求
+#### 13-项目-登录-登录成功-进入home组件
+> 登录成功 -> 来到home组件
+1. js编程式导航this.$router.push({name: 'home'})
+2. App.vue router-view
+3. 新建home组件
+4. 路由index.js 配置路由
+
+#### 14-项目-登录-简化登录请求代码-async和await
+> 让异步代码ajax看起来像同步代码
+1. 找到异步操作有结果的代码 前面加await 同时接口异步操作的结果res
+2. 找到距离异步操作有结果的代码最近的方法 前面加async
+
+#### 15-项目-登录-保存token值
+> 目的：如果用户没登录 -> url直接来到home组件
+> 在登录成功时 保存正确用户的token
+```js
+    localStorage.setItem('token', data.token)
+```
+
+#### 16-项目-首页-布局容器-使用-样式调整
+> 引入布局容器
+
+#### 17-项目-首页-头部-样式调整
+> loyout 布局
+> 行 el-row
+> 列 el-col
+> 注意：24栏
+
+#### 18-项目-首页-侧边栏-导航组件-文档
+> el-menu
+    1.router 开启路由模式 true index值==path值
+    2.unique-opened是否只保持一个子菜单的展开
+
+#### 19-项目-首页-侧边栏-引入导航组件-调整
+> 调整el-menu
+> index值不能一样
+
+#### 20-项目-首页-进入首页的权限验证
+> 如果没有登录过 就不能进入到home组件
+```js
+  // new Vue之前触发
+  beforeCreate () {
+    // 获取token
+    const token = localStorage.getItem('token')
+    if (!token) {
+      // token 没有 -> 登录
+      this.$router.push({name: 'login'})
+    }
+    // if token 有 -> 继续渲染组件
+  }
+```
+
+#### 21-项目-首页-头部-退出功能
+```js
+    // 退出
+    handleSignout () {
+      // 1.清除token
+      localStorage.clear()
+      // 2.提示
+      this.$message.success('退出成功')
+      // 3.来到login组件
+      this.$router.push({name: 'login'})
+    }
+```
+
+#### 22-项目-首页-合并分支-新建用户分支
+
+#### 23-项目-首页-用户列表-新建组件-路由配置
+

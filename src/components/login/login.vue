@@ -8,7 +8,7 @@
         <el-form-item label="密码">
             <el-input v-model="formdata.password"></el-input>
         </el-form-item>
-        <el-button class="login-btn" type="primary" @click.prevent="handleLogin">登录</el-button>
+        <el-button class="login-btn" type="primary" @click.prevent="handleLogin2">登录</el-button>
     </el-form>
   </div>
 </template>
@@ -32,6 +32,8 @@ export default {
           const {
             data, meta: {msg, status}
           } = res.data
+
+          console.info(data)
 
           //   // 1
           //   const {meta:obj} =
@@ -59,6 +61,29 @@ export default {
             this.$message.error(msg)
           }
         })
+    },
+    // 登录请求2
+    async handleLogin2 () {
+      // 希望让异步操作的代码 看起来像同步代码
+      // ES7 async+await
+      const res = await this.$http.post('login', this.formdata)
+      const {
+        data, meta: {msg, status}
+      } = res.data
+      if (status === 200) {
+        // 登录成功
+        // 0. 保存token
+        localStorage.setItem('token', data.token)
+        // 1. 跳转home
+        this.$router.push({name: 'home'})
+        // 2. 提示成功
+        this.$message({
+          message: msg,
+          type: 'success'
+        })
+      } else {
+        this.$message.error(msg)
+      }
     }
   }
 }
