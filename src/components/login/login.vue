@@ -45,6 +45,7 @@ export default {
           //   {meta:{msg:"11", status:200}}
           //   // 结果
           //   {msg, status} = {msg:"11", status:200}
+          //   msg:"11"  status:200
 
           //    不成功
           //    1. 提示消息

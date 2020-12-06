@@ -17,7 +17,7 @@
     </el-header>
     <el-container>
       <el-aside width="200px" class="aside">
-        <el-menu 
+        <el-menu
         :unique-opened="true">
           <!-- 用户管理 -->
           <el-submenu index="1">

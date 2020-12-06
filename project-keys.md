@@ -8,6 +8,11 @@
 3. config/ 本地服务器配置
 4. .eslintignore eslint排除工具
 5. .eslintrc eslint配置文件
+6. .babelrc 转换es6代码
+7. .postcaarc 兼容浏览器
+8. .package 这个项目所需要的各种模块，以及项目的配置信息（比如名称、版本、许可证等元数据）。
+    npm install命令根据这个配置文件，自动下载所需的 模块，也就是配置项目所需的运行和开发环境。
+    npm i 简化命令
 #### 02-项目-准备-代码规范-自定义指令-lintfix
 项目采用 JavaScript Standard Style代码风格，以下是一些基本规范细则
     使用两个空格 进行缩进
