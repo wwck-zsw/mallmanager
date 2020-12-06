@@ -179,6 +179,10 @@ export default MyHttpServer
 ```
 
 #### 22-项目-首页-合并分支-新建用户分支
+ 1. 切到 master 分支
+ 2. git merge dev-login 合并分支
+ 3. push
+ 4. 新建 dev-users
 
 #### 23-项目-首页-用户列表-新建组件-路由配置
 
