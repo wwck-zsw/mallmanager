@@ -13,12 +13,18 @@ import '@/assets/css/reset.css'
 // Vue.prototype.$http = axios
 // 两种都可以，下面是写成插件导入（把一个不是vue插件的变成vue插件）
 import MyServerHttp from '@/plugins/http.js'
+import moment from 'moment'
 
 // 使用element(组件库)
 Vue.use(ElementUI)
 Vue.use(MyServerHttp)
 
 Vue.config.productionTip = false
+
+// 全局过滤器 - 处理日期
+Vue.filter('fmtdate', (v) => {
+  return moment(v).format('YYYY-MM-DD')
+})
 
 /* eslint-disable no-new */
 new Vue({

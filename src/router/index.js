@@ -5,6 +5,8 @@ import Router from 'vue-router'
 // @ == src目录
 import Login from '@/components/login/login.vue'
 import Home from '@/components/home/home.vue'
+import Users from '@/components/users/users.vue'
+import Index from '@/components/index.vue'
 
 Vue.use(Router)
 
@@ -18,7 +20,17 @@ export default new Router({
     {
       name: 'home',
       path: '/',
-      component: Home
+      component: Home,
+      children: [{
+        // path: '/'  设置首页
+        name: 'index',
+        path: '/index',
+        component: Index
+      }, {
+        name: 'users',
+        path: '/users',
+        component: Users
+      }]
     }
   ]
 })

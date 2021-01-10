@@ -76,7 +76,7 @@ export default {
         // 0. 保存token
         localStorage.setItem('token', data.token)
         // 1. 跳转home
-        this.$router.push({name: 'home'})
+        this.$router.push({name: 'index'})
         // 2. 提示成功
         this.$message({
           message: msg,
