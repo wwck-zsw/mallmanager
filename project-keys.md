@@ -372,6 +372,12 @@ export default MyHttpServer
  3. 把之前添加对话框进行复制 - 修改
  > form用的是之前添加用户时的form
 
+ #### 18-项目-用户管理-用户列表-编辑用户-显示对话框
+ 1. 之前分页 回到第一页的写法 this.pagenum=1
+ 2. el-table 固定表头 height="250px"
+ > max-height="250px"
+ > overflow: auto
+
 
  #### day-09-重点
 
@@ -422,20 +428,174 @@ export default MyHttpServer
  3. 在showSetUserRoleDia () { this.currUserId = user.id }
 
  #### 09-项目-用户管理-用户列表-合并分支-推送
+ 1. git add .
+ 2. git commit -m "注释"
+ 3. git branch
+ 4. git checkout master
+ 5. git merge dev-users
+ 6. git push
  
  #### 10-项目-权限管理-新建分支-功能演示
+ 1. 权限管理
+ 2. 角色列表
+ > 展开行+树形结构
+ 3. 权限列表
+
+ #### 11-项目-权限管理-权限列表-新建组件-路由配置
+ 1. 新建right.vue
+ 2. home.vue 改标识
+ 3. 配置路由
+
+ #### 12-项目-权限管理-权限列表-自定义面包屑组件
+ > 好多组件都有面包屑 -> 二次封装面包屑组件
+ 1. 新建 .Vue文件
+ 2. 在自定义组件中提供数据 level1 level2 -> props: []
+ 3. main.js 中引入
+ 4. Vue.component(MyBread.name, MyBread)
+
+ #### 13-项目-权限管理-权限列表-获取权限列表数据
+ > 除了登录之外的所有请求 都需要设置头部信息
+ > type参数 值list或tree
+
+ #### 14-项目-权限管理-权限列表-axios-拦截器统一设置请求头
+ > 除了登录之外的所有请求 都需要设置头部信息
+ > 请求发起之前 添加头部 -> axios文档
+ > 请求拦截器 config.header
+ > 响应拦截器 
+
+ #### 15-项目-权限管理-权限列表-表格展示
+ > 引入el-table 绑定数据 rightlist(authName path level)
+
+ #### 16-项目-权限管理-权限列表-表格展示-层级显示
+ > level === '0' 一级
+ 1. template slot-scope="scope"
+ 2. v-if="scope.row.level === '0'" 一级
+
+ #### 17-项目-权限管理-权限列表-表格展示-固定表头
+ > 给el-table设置固定高
+ > overflow: auto
+
+ #### 18-项目-权限管理-角色列表-新建组件-配置路由
+ 1. 新建role.vue组件
+ 2. 配置路由
+
+ #### 19-项目-权限管理-角色列表-面包屑和添加按钮
+ 1. 自定义面包屑
+ 2. 添加按钮
+
+ #### 20-项目-权限管理-角色列表-获取角色列表数据
+ 1. 发送请求 this.$http.get(`roles`)
+
+ #### 21-项目-权限管理-角色列表-表格展示
+ > 将users.vue中的表格进行复制 修改
+ 1. :data="rolelist"
+ 2. roleName
+ 3. roleDesc
+ 4. 操作
+
+ #### 22-项目-权限管理-角色列表-表格展示-展开行功能分析
+ 1. type="expand"
+ 2. template > 该用户的权限（三级）
+ 3. 布局是行列布局 -> for嵌套 -> for嵌套 渲染el-tag
+
+ #### 23-项目-权限管理-角色列表-表格展示-展开行-一级权限
+ 1. 分析数据rolelist > 每个对象中的chlidren中authName
+ 2. 布局 一行 > (列A > (el-tag) + 列B > (一行el-row) > 两列((el-colA > el-tag+el)-colB > el-tag))
+ 3. 一级权限展示 v-for 最外层的el-row scope.row.children
+
+ ### day-10-重点
+
+ #### 01-项目-权限管理-角色列表-表格展示-展开行-二级权限
+ > 在第一列（一级权限）的基础上 展示二级权限
+
+ #### 02-项目-权限管理-角色列表-表格展示-展开行-三级权限
+ > 在二级权限展示完毕的基础上
+ > v-for 遍历的是item2.children el-tag
+
+ #### 03-项目-权限管理-角色列表-表格展示-展开行-样式调整
+ 1. el-tag颜色 type="success"
+ 2. closeable 关闭按钮
+ 3. <i class=""></i> 图标
+
+ #### 04-项目-权限管理-角色列表-表格展示-展开行-处理无权限的展示
+ > 角色无权限时 提示
+ > <span v-if="scope.row.children.length===0">未分配权限</span>
+
+ #### 05-项目-权限管理-角色列表-表格展示-展开行-取消权限
+ > 点击x按钮 取消该角色的权限
+ 1. 给el-tag @close="deleRight(scope.row.id,itemx.id)"
+ 2. deleRight(roleId, rightId){发送请求}
+ 3. this.$http.delete(`roles/${roleId}/rights/${rightId}`)
+ 4. 更新视图
+ > 删除成功 返回了该角色的剩余权限
+
+ #### 06-项目-权限管理-角色列表-表格展示-展开行-取消取消-优化
+ > 删除成功 -> 更新整个表格 -> 没必要
+ > 删除成功 返回了该角色的剩余权限
+ > 删除成功 -> 更新了当前角色的children
+
+ #### 07-项目-权限管理-角色列表-表格展示-显示对话框
+ > 点击操作的check按钮 -> 打开对话框
+ 1. 提供对话框
+ 2. check按钮 @click="showDeleUserMsgBox(scope.row.id)"
+
+ #### 08-项目-权限管理-角色列表-表格展示-修改权限-树形结构-文档分析
+ <!--
+    树形结构
+    data -> 数据源[]
+    show-checkbox -> 选择框
+    node-key 每个节点的唯一标识 通常时data数据源中key名id
+    default-expanded-keys 默认展开 [要展开节点的id]
+    default-checked-keys [要选择节点的id]
+    props 配置项 {label, children}
+    label 节点的文字标题, children 节点的子节点
+    值都来源于data绑定的数据源中的key名 'label' 和 'children'
+ -->
+
+ #### 09-项目-权限管理-角色列表-表格展示-修改权限-树形结构-配置数据
+ 1. data中treeList
+ 2. 打开对话框 获取树形结构的权限列表数据
+ > const res = await this.$http.get(`/rights/tree`)
+ > this.treeList = res.data.data
+ 3. el-tree :data="treeList"
+ 4. el-tree node-key="id"
+ 5. :props={children: 'children', label: 'authName'}
+
+ #### 10-项目-权限管理-角色列表-表格展示-修改权限-树形结构-展开所有项
+ 1. 两种写法
+ > el-tree default-expand-all
+ > :default-expanded-keys=[所有权限的id] for嵌套
+
+ #### 11-项目-权限管理-角色列表-表格展示-修改权限-树形结构-显示角色拥有的权限
+ > el-tree :default-checked-keys="arrcheck"
+ 1. data arrcheck
+ 2. role for嵌套 获取最里层叶子节点id arrtemp2
+ 3. this.arrcheck = arrtemp2
+
+ #### 12-项目-权限管理-角色列表-表格展示-修改权限-树形结构-分配权限-功能分析
+ #### 13-项目-权限管理-角色列表-表格展示-修改权限-树形结构-分配权限-实现
+ 1. 点击对话框的确定 发送请求
+ > roleId rid
+ 2. roleId 在打开对话框的方法中 this.roleId - role.id
+ 3.
+ 3.1 获取全选的id数组arr1 getCheckedKeys()
+ 3.2 获取半选的id数组arr2 getHalfCheckedKeys()
+ 4. 在js中调用el-tree的js方法
+ 4.1 给el-tree设置ref
+ 4.2 this.$refs.ref的值tree.js方法(3.1和3.2的方法名)
+ 4.3 返回两个数组arr1和arr2
+ 5. ES6 展开运算符
+ > let arr = [...arr1,...arr2]
+ 6. this.$http.post(`/roles/${this.currRoleId}/rights`, {rids: arr.join(',')})
+ 7. 关闭对话框+更新视图
+
+ #### 14-项目-首页-侧边栏-动态导航
+
+ #### 15-项目-权限管理-角色列表-表格展示-修改权限-树形结构-文档分析
+ #### 16-项目-权限管理-角色列表-表格展示-修改权限-树形结构-文档分析
 
 
 
 
- #### 06-项目-用户管理-用户列表-分配角色-显示对话框-下拉框
- #### 06-项目-用户管理-用户列表-分配角色-显示对话框-下拉框
- #### 06-项目-用户管理-用户列表-分配角色-显示对话框-下拉框
- #### 06-项目-用户管理-用户列表-分配角色-显示对话框-下拉框
- #### 06-项目-用户管理-用户列表-分配角色-显示对话框-下拉框
 
- #### 06-项目-用户管理-用户列表-分配角色-显示对话框-下拉框
- #### 06-项目-用户管理-用户列表-分配角色-显示对话框-下拉框
- #### 06-项目-用户管理-用户列表-分配角色-显示对话框-下拉框
- #### 06-项目-用户管理-用户列表-分配角色-显示对话框-下拉框
   

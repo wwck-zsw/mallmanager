@@ -19,6 +19,7 @@
             </el-row>
             <!-- 表格 -->
             <el-table
+                max-height="500px"
                 :data="userList"
                 style="width: 100%">
                 <el-table-column
@@ -367,6 +368,7 @@ export default {
     // 分页相关方法
     handleSizeChange (val) {
       console.log(`每页 ${val} 条`)
+      // 回到第一页
       this.pagenum = 1
       this.pagesize = val
       this.getuserList()

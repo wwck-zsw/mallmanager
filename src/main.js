@@ -14,6 +14,8 @@ import '@/assets/css/reset.css'
 // 两种都可以，下面是写成插件导入（把一个不是vue插件的变成vue插件）
 import MyServerHttp from '@/plugins/http.js'
 import moment from 'moment'
+// 面包屑  MyBread其实就是组件选项所在的对象 {template:'',data等}
+import MyBread from '@/components/cuscom/myBread.vue'
 
 // 使用element(组件库)
 Vue.use(ElementUI)
@@ -25,6 +27,9 @@ Vue.config.productionTip = false
 Vue.filter('fmtdate', (v) => {
   return moment(v).format('YYYY-MM-DD')
 })
+// 全局自定义组件 (不应该去自定义组件名称，要使用组件原有的名称)
+// Vue.component('my-bread', MyBread)
+Vue.component(MyBread.name, MyBread)
 
 /* eslint-disable no-new */
 new Vue({
