@@ -23,17 +23,19 @@
         :router="true"
         :unique-opened="true">
           <!-- 用户管理 -->
-          <el-submenu index="1">
+          <el-submenu :index="'' + item1.order"
+          v-for="(item1,index) in menus" :key="index">
             <template slot="title">
               <i class="el-icon-location"></i>
-              <span>用户管理</span>
+              <span>{{item1.authName}}</span>
             </template>
-            <el-menu-item index="users">
+            <el-menu-item :index="item2.path"
+            v-for="(item2,index) in item1.children" :key="index">
               <i class="el-icon-success"></i>
-              <span>用户列表</span>
+              <span>{{item2.authName}}</span>
             </el-menu-item>
           </el-submenu>
-          <!-- 权限管理 -->
+          <!-- 权限管理
           <el-submenu index="2">
             <template slot="title">
               <i class="el-icon-location"></i>
@@ -47,8 +49,8 @@
               <i class="el-icon-location"></i>
               <span>权限列表</span>
             </el-menu-item>
-          </el-submenu>
-          <!-- 商品管理 -->
+          </el-submenu> -->
+          <!-- 商品管理
           <el-submenu index="3">
             <template slot="title">
               <i class="el-icon-location"></i>
@@ -66,8 +68,8 @@
               <i class="el-icon-location"></i>
               <span>商品分类</span>
             </el-menu-item>
-          </el-submenu>
-          <!-- 订单管理 -->
+          </el-submenu> -->
+          <!-- 订单管理
           <el-submenu index="4">
             <template slot="title">
               <i class="el-icon-location"></i>
@@ -77,8 +79,8 @@
               <i class="el-icon-location"></i>
               <span>订单列表</span>
             </el-menu-item>
-          </el-submenu>
-          <!-- 数据统计 -->
+          </el-submenu> -->
+          <!-- 数据统计
           <el-submenu index="5">
             <template slot="title">
               <i class="el-icon-location"></i>
@@ -88,7 +90,7 @@
               <i class="el-icon-location"></i>
               <span>数据报表</span>
             </el-menu-item>
-          </el-submenu>
+          </el-submenu> -->
         </el-menu>
       </el-aside>
       <el-main class="main">
@@ -102,9 +104,28 @@
 export default {
   data () {
     return {
+      menus: []
     }
   },
+  created () {
+    this.getMenus()
+  },
   methods: {
+    // 获取导航数据
+    async getMenus () {
+      // 发送请求
+      const res = await this.$http.get(`/menus`)
+      console.info(res)
+      const {meta: {status, msg}} = res.data
+      if (status === 200) {
+        // 提示
+        this.$message.success(msg)
+        this.menus = res.data.data
+      } else {
+        // 提示
+        this.$message.warning(msg)
+      }
+    },
     // 退出
     handleSignout () {
       // 1.清除token
@@ -118,11 +139,11 @@ export default {
   // new Vue之前触发
   beforeCreate () {
     // 获取token
-    const token = localStorage.getItem('token')
-    if (!token) {
-      // token 没有 -> 登录
-      this.$router.push({name: 'login'})
-    }
+    // const token = localStorage.getItem('token')
+    // if (!token) {
+    //   // token 没有 -> 登录
+    //   this.$router.push({name: 'login'})
+    // }
     // if token 有 -> 继续渲染组件
   }
 }
