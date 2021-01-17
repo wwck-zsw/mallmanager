@@ -847,9 +847,40 @@ export default MyHttpServer
  > form: {cat_pid: -1, cat_name: '', cat_level: -1}
 
  #### 17-项目-合并分支-推送分支-新建分支
- 
+ 0. git status
+ 1. git add .
+ 2. git commit -m "注释"
+ 3. git branch
+ 4. git checkout master
+ 5. git merge dev-users
+ 6. git push
+
  #### 18-项目-订单管理-订单列表-准备组件-路由配置
+ 1. order/order.vue
+ 2. 路由配置 path:"/orders"
+ > 编辑按钮 -> 打开对话框 -> 省市区数据
+
  #### 19-项目-订单管理-订单列表-省市区引入
+ > 在.vue中可以引入.js库 swiper.js
+ > vue.swiper.js 插件
+
+ #### 20-项目-数据统计-数据报表-Echarts-文档-引入
+ 1. npm i echarts
+ 2. 导入
+ 3. 视图 提供一个容器 div(需要设置宽高)
+ 4. myechart.init(容器)
+ 5. 配置选项(配置数据) option
+ 6. myechart.setOptiom(option)
+ > mounted () { this.useEchart() }
+
+ #### 21-项目-数据统计-数据报表-Echarts-配置
+ > repreports/type/1
+ > opiton来源于两部分
+ 1. reports/type/1
+ 2. 固定数据
+ > setOpiton
+
+ #### 22-项目-订单管理-订单列表-省市区引入
 
 
 
