@@ -880,8 +880,9 @@ export default MyHttpServer
  2. 固定数据
  > setOpiton
 
- #### 22-项目-订单管理-订单列表-省市区引入
-
+ ### 打包
+ >  npm run build
+ 1. dist/index.html+static(caa/font/js(app.xxx.js+vender.xxx.js))
 
 
 
