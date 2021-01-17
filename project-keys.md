@@ -612,9 +612,244 @@ export default MyHttpServer
  2.3 next() 让to的路由配置继续生效
  
  #### 17-项目-权限管理-合并分支-推送-新建分支
- #### 18-项目-商品管理-功能演示
- #### 19-项目-商品管理-商品列表-准备组件
+ 1. git add .
+ 2. git commit -m "注释"
+ 3. git checkout master
+ 4. git merge dev-rights
+ 5. git push
 
+ #### 18-项目-商品管理-功能演示
+ 1. 商品列表添加商品
+ 2. 分类参数
+ 2.1 动态参数
+ 2.2 静态参数(x)
+ 3. 商品分类
+ 3.1 表格中的树形结构
+
+
+ ### day-11-重点
+
+ #### 01-项目-商品管理-商品列表-准备组件
+ > goods/goodslist.vue
+ > 配置路由 标识path是goods
+
+ #### 02-项目-商品管理-添加商品-新建组件配置路由
+ 1. goods/goodsadd.vue
+ 2. 配置路由 path:'/goodsadd'
+ 3. 点击列表组件中添加商品按钮 js编程式导航
+ 
+ #### 03-项目-商品管理-添加商品-步骤条
+ 1. 面包屑
+ 2. 提示 el-alert
+ 3. 步骤条（进度条） el-steps
+ > :active="abc" 如果"abc"值=2 表示当前是第二步
+
+ #### 04-项目-商品管理-添加商品-tabs
+ 1. 引入el-table 表单元素 v-model="active"
+ 2. 如果选中的第二个el-tab-pane 此时active的值就是该tab的name属性值 也就是2
+ 3. 让rl-steps步骤条的:active属性的值和v-model绑定的属性是同一个
+
+ #### 05-项目-商品管理-添加商品-基本信息-表单绑定数据
+ 1. 最外层包裹 el-form 调整了样式 overflow:auto
+ 2. v-model = "form"
+ 3. form数据的来源 添加商品的网络请求
+ 4. 基本信息tab 一般表单元素的数据绑定（名称/价格/重量/数量）
+
+ #### 06-项目-商品管理-添加商品-基本信息-级联选择器-文档-引入
+ > el-cascader 表单元素 级联选择器
+ 1. options=数据list[]
+ 2. v-model="selectOptions" 最终选择的label对应的value会在selectOptions数组中
+ 3. :props="{label: 'goodsname',value: 'id',children: 'children'}"
+ 4. @change="" 选择改变时触发
+ ```js
+    list:[
+        {
+            goodsname: '家电',
+            id: '1',
+            children: [
+                goodsname: 'A家电',
+                id: '101',
+                children: []
+            ]
+        }
+    ]
+ ```
+
+ #### 07-项目-商品管理-添加商品-基本信息-级联选择器-获取分类数据
+ 1. created(){}
+ 2. getGoodCate () {发送请求 type=3}
+ 3. this.options = res.data.data
+ 4. defaultProp: {label: 'cat_name',value: 'cat_id',children: 'children'}
+ 5. selectOptions: [1,3,6] 设置默认的分类
+
+ #### 08-项目-商品管理-添加商品-基本信息-级联选择器-配置数据
+
+ #### 09-项目-商品管理-添加商品-商品参数-获取动态参数数据
+ 1. 必须要先选择三级分类 -> 点击第二个tab才会获取数据
+ 2. if (this.active === '2') { if (this.selectOptions.length !== 3) { 提示 return} }
+ 3. categories/${this.selectOptions[2]}/attributes/?sel=many
+ > sel=many 获取的是动态参数数据
+
+ #### 10-项目-商品管理-添加商品-商品参数-复选框组-文档-引入
+ 1. 商品参数->动态参数数据->this.arrDyparams
+ 2. el-form-item + 复选框组
+ 3. v-for遍历el-form-item和el-checkbox
+ > this.arrDyparams中的每个对象的attr_vals字符串->split(',') 数组
+
+ #### 11-项目-商品管理-添加商品-商品参数-复选框组-调整样式
+ 1. border
+ 2. el-checkbox-group v-model="item1.attr_vals"
+
+ #### 12-项目-商品管理-添加商品-商品属性-获取静态参数数据
+ 1. 如果选中了第三个tab this.active === '3',同时分类数组 长度===3
+ 2. sel=only
+ > 静态参数的数据 是给商品属性用的
+
+ #### 13-项目-商品管理-添加商品-商品参数-布局
+ > v-for遍历输出arrStaticparams
+
+ #### 14-项目-商品管理-添加商品-图片上传-文档-引入
+ > el-upload
+ 1. action 全路径
+ 2. headers 头部
+ 3. on-remove = "移除触发的方法"
+ 4. on-preview = ""
+ 4. on-success = ""
+
+ #### 15-项目-商品管理-添加商品-图片上传-配置属性-临时路径
+ 1. action = "http开头全路径"
+ 2. headers: { Authorization: localStorage.getItem('token') }
+ > 除了登录请求 都需要设置头部 之前全局的头部设置是给axios请求设置的
+ > 图片移除 file.response.data.tmp_path 图片临时上传的路径
+ > 图片上传成功 file.data.tmp_path 图片临时上传的路径
+
+ #### 16-项目-商品管理-添加商品-商品内容-富文本编辑器
+ > npm install vue-quill-editor --save
+ 1. 全局注册 + 局部注册
+ ```js
+    import { quillEditor } from 'vue-quill-editor'
+    import 'quill/dist/quill.core.css'
+    import 'quill/dist/quill.snow.css'
+    import 'quill/dist/quill.bubble.css'
+ ```
+ 2. 通过选项局部注册
+  ```js
+    components: {
+        quillEditor
+    },
+ ```
+ > v-model="form.goods_introduce"
+ > github+npm+vue官网（资源列表）
+
+ #### 17-项目-商品管理-添加商品-表单数据分析
+ ```js
+    未处理的数据
+    1.
+    goods_cat 以为','分割的分类列表  不能为空 -> 级联选择器绑定的数据 selectOptions
+    this.selectOption -> String
+    2.
+    pics 上传的图片临时路径（对象）可以为空
+    pics是数组 [{pics: 图片临时路径}]  
+    3.
+    attrs 商品的参数（数组），包含动态参数和静态属性可以为空
+ ```
+
+ #### 18-项目-商品管理-添加商品-表单数据处理-分类和图片
+ 0. this.form.goods_cat = this.selectOptions.join(',')
+ 1. 在临时上传成功时 给pics添加元素
+ 2. 在移除图片
+ 2.1 findIndex 找索引
+ 2.2 splice(索引,1)
+
+
+ ### day-12-重点
+
+ #### 01-项目-商品管理-添加商品-表单数据处理-attr_vals
+ 1. this.form.attes [{attr_id:?,attr_value:?}]
+ 2. 动态参数数组+静态参数数组 map遍历 返回新数组arr1和arr2
+ 3. 合并数组 this.form.attrs = [...arr1, ...arr2]4
+ 4. 发送请求
+ 5. 回到商品列表
+
+ #### 02-项目-商品管理-分类参数-新建组件-路由配置
+ 1. goods/cateparams.vue
+ 2. 路由配置 path:"/params"
+
+ #### 03-项目-商品管理-分类参数-动态参数-布局-配置级联选择器
+ 1. el-form > el-form-item > cas级联选择器
+ 2. 把goodsadd.vue中的级联选择器进行修改
+ 3. created(){this.getGoodsCate()}
+
+ #### 04-项目-商品管理-分类参数-动态参数-获取动态参数数据
+ 1. 级联选择器选项发送改变时 同时 选择了三级分类
+ > 获取动态参数数组 > 把goodsadd.vue的代码拿过来进行修改
+
+ #### 05-项目-商品管理-分类参数-动态参数-表格渲染
+ 1. el-table :data="arrDyparams
+ 2. 属性名称 prop="attr_name"
+ 3. 第一列 type="expand"
+
+ #### 06-项目-商品管理-分类参数-动态参数-动态编辑 tag-文档-引入
+ 1. 动态tag编辑
+ 1.1 删除
+ 1.2 添加
+ > html(el-tag+el-input+el-button)+css+js(handleClose,showInput,handleInputConfirm)
+
+ #### 07-项目-商品管理-分类参数-动态参数-动态编辑 tag-配置-完成
+ 1. el-tag v-for="tag in props.row.attr_vals"
+ 2. handleInputConfirm(props.row.attr_vals)
+ 3. handleClose(props.row.attr_vals, tag)
+
+ #### 08-项目-商品管理-分类参数-动态参数-删除-发送请求
+ > attr_vals 以‘,’号分隔、
+ > 删除请求的接口 put 请求体 接口文档中没有
+ let putData = {
+    attr_name: row.attr_name,
+    attr_sel: 'many',
+    attr_vals: row.attr_vals.join(',')
+ }
+
+ #### 09-项目-商品管理-分类参数-动态参数-添加-发送请求
+ > handleInputConfirm(props.row)
+ > 添加属性值和删除属性值 请求是同一个put请求
+
+ #### 10-项目-商品管理-分类参数-静态参数-布局-获取数据
+ 1. 点击第二个tag 请求静态参数数组的数据
+ 2. el-table 布局
+ 3. 把动态参数的表格进行修改
+
+ #### 11-项目-商品管理-商品分类-准备组件-路由配置
+ 1. 准备组件 goods/goodscate/vue
+ 2. 路由配置 path:'/categories'
+
+ #### 12-项目-商品管理-商品分类-准备组件-代码梳理
+ 1. 对话框中的级联选择器的数据 还未获取
+
+ #### 13-项目-商品管理-商品分类-element-tree-grid-文档-引入
+ > 单元格->树形结构->el-table->element-tree-grid
+ > 插件名 element-tree-grid -> 增强了el-table的单元格
+ 1. npm i element-tree-grid --save
+ 2. 导入
+ 3. 局部注册
+ 4. <element-tree-grid></element-tree-grid>
+ 5. treeKey="" parentKey="" levelKey="" childKey=""
+
+ #### 14-项目-商品管理-商品分类-element-tree-grid-配置
+ > treeKey等属性值的来源 el-table :data="list"
+
+ #### 15-项目-商品管理-商品分类-添加分类-打开对话框-获取数据
+ 1. 点击添加分类按钮 - 打开对话框
+ 2. 获取二级分类的数据 type=2
+ > 不能给三级分类子级添加四级分类
+
+ #### 16-项目-商品管理-商品分类-添加分类-发送请求
+ > 只能添加三级分类
+ > form: {cat_pid: -1, cat_name: '', cat_level: -1}
+
+ #### 17-项目-合并分支-推送分支-新建分支
+ 
+ #### 18-项目-订单管理-订单列表-准备组件-路由配置
+ #### 19-项目-订单管理-订单列表-省市区引入
 
 
 
